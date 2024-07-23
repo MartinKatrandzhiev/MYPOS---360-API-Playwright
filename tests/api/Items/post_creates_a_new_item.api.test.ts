@@ -1,0 +1,173 @@
+// COVERAGE_TAG: POST /api/Items
+
+import { components, paths } from "../../../api/controllers/types";
+
+import {
+  test,
+  describe,
+  expect,
+  beforeEach,
+} from "../../../api/fixtures/fixtures";
+
+describe("Items - /api/Items", () => {
+  beforeEach(async ({}) => {});
+
+  test("Should make successful 201 POST /api/Items request create a new item", async ({
+    itemsController,
+    env,
+    utils,
+  }) => {
+    const headers: paths["/api/Items"]["post"]["parameters"]["header"] = {
+      "Api-Key": `${env.API_KEY}`,
+      "Api-Secret": `${env.API_SECRET}`,
+      "Login-Id": `${env.LOGIN_ID}`,
+      "Wallet-Id": `${env.WALLET_ID}`,
+      // Tid: `${env.TID}`,
+    };
+
+    const response = await itemsController.postApiItemsCreateNew(
+      await itemToCreate(
+        2,
+        15.0,
+        await utils.generateRandomName(),
+        "BGN",
+        "1122334455",
+        50,
+        "This is banana",
+        await utils.generateRandomUuid(),
+        2495,
+        1887,
+        1,
+        20,
+        null,
+        null,
+        false,
+        false,
+        true,
+        1,
+        true,
+        "barcode",
+        1,
+        "risk status description",
+        1,
+        1,
+        1,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        1,
+        false,
+        2,
+        1,
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ),
+      headers
+    );
+
+    const responseBody = await response.json();
+
+    await expect(await response.status()).toBe(201);
+  });
+});
+
+async function itemToCreate(
+  unit_type: components["schemas"]["CreateItemCommand"]["unit_type"],
+  original_price: components["schemas"]["CreateItemCommand"]["original_price"],
+  name: components["schemas"]["CreateItemCommand"]["name"],
+  currency: components["schemas"]["CreateItemCommand"]["currency"],
+  sku: components["schemas"]["CreateItemCommand"]["sku"],
+  in_stock: components["schemas"]["CreateItemCommand"]["in_stock"],
+  description: components["schemas"]["CreateItemCommand"]["description"],
+  image_guid: components["schemas"]["CreateItemCommand"]["image_guid"],
+  category_id: components["schemas"]["CreateItemCommand"]["category_id"],
+  discount_id: components["schemas"]["CreateItemCommand"]["discount_id"],
+  vat: components["schemas"]["CreateItemCommand"]["vat"],
+  vat_value: components["schemas"]["CreateItemCommand"]["vat_value"],
+  outlet_id: components["schemas"]["CreateItemCommand"]["outlet_id"],
+  outlet_type: components["schemas"]["CreateItemCommand"]["outlet_type"],
+  multiple_prices: components["schemas"]["CreateItemCommand"]["multiple_prices"],
+  multiple_languages: components["schemas"]["CreateItemCommand"]["multiple_languages"],
+  is_stock_managed: components["schemas"]["CreateItemCommand"]["is_stock_managed"],
+  stock_alert_number: components["schemas"]["CreateItemCommand"]["stock_alert_number"],
+  is_shippable: components["schemas"]["CreateItemCommand"]["is_shippable"],
+  barcode: components["schemas"]["CreateItemCommand"]["barcode"],
+  risk_status: components["schemas"]["CreateItemCommand"]["risk_status"],
+  risk_status_description: components["schemas"]["CreateItemCommand"]["risk_status_description"],
+  risk_substatus: components["schemas"]["CreateItemCommand"]["risk_substatus"],
+  weight: components["schemas"]["CreateItemCommand"]["weight"],
+  weight_type: components["schemas"]["CreateItemCommand"]["weight_type"],
+  multiple_pictures: components["schemas"]["CreateItemCommand"]["multiple_pictures"],
+  multiple_variations: components["schemas"]["CreateItemCommand"]["multiple_variations"],
+  stores_prices_vary: components["schemas"]["CreateItemCommand"]["stores_prices_vary"],
+  stores_quantities_vary: components["schemas"]["CreateItemCommand"]["stores_quantities_vary"],
+  stores_skus_vary: components["schemas"]["CreateItemCommand"]["stores_skus_vary"],
+  store_barcodes_vary: components["schemas"]["CreateItemCommand"]["store_barcodes_vary"],
+  type: components["schemas"]["CreateItemCommand"]["type"],
+  is_overview_enabled: components["schemas"]["CreateItemCommand"]["is_overview_enabled"],
+  product_type: components["schemas"]["CreateItemCommand"]["product_type"],
+  bundle_items_type: components["schemas"]["CreateItemCommand"]["bundle_items_type"],
+  pictures: components["schemas"]["CreateItemCommand"]["pictures"],
+  languages: components["schemas"]["CreateItemCommand"]["languages"],
+  prices: components["schemas"]["CreateItemCommand"]["prices"],
+  variations: components["schemas"]["CreateItemCommand"]["variations"],
+  variation_types: components["schemas"]["CreateItemCommand"]["variation_types"],
+  pricings: components["schemas"]["CreateItemCommand"]["pricings"],
+  variations_pricings: components["schemas"]["CreateItemCommand"]["variations_pricings"],
+  bundle_items: components["schemas"]["CreateItemCommand"]["bundle_items"]
+): Promise<components["schemas"]["CreateItemCommand"]> {
+  return {
+    unit_type,
+    original_price,
+    name,
+    currency,
+    sku,
+    in_stock,
+    description,
+    image_guid,
+    category_id,
+    discount_id,
+    vat,
+    vat_value,
+    outlet_id,
+    outlet_type,
+    multiple_prices,
+    multiple_languages,
+    is_stock_managed,
+    stock_alert_number,
+    is_shippable,
+    barcode,
+    risk_status,
+    risk_status_description,
+    risk_substatus,
+    weight,
+    weight_type,
+    multiple_pictures,
+    multiple_variations,
+    stores_prices_vary,
+    stores_quantities_vary,
+    stores_skus_vary,
+    store_barcodes_vary,
+    type,
+    is_overview_enabled,
+    product_type,
+    bundle_items_type,
+    pictures,
+    languages,
+    prices,
+    variations,
+    variation_types,
+    pricings,
+    variations_pricings,
+    bundle_items,
+  };
+}
